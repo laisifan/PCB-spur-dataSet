@@ -1,2 +1,17 @@
-# PCB-spur-dataSet
-the dataset of CD-Mosaic Data augment method 
+# PCB-Spur-Defect-Detection-Dataset
+The dataset of CD-Mosaic data augmentation method 
+
+I. Original Dataset Sources
+The dataset used in this study was derived from three publicly available and authoritative sources, with the basic information of each data source detailed as follows:
+  1.Roboflow Dataset 1 (URL: https://universe.roboflow.com/tugas-akhir-ralr2/spur-acjsu): It contains 1,752 images with a unified resolution of 416×416. All samples are exclusively labeled for spur defects without interference from other categories, providing a core sample foundation of spur defects for the dataset.
+  2.Roboflow Dataset 2 (URL: https://universe.roboflow.com/deteccin-por-defecto/pcb-spur-d-d): It includes 1,517 images with a resolution of 640×60, annotated with 3 defect categories including spur. This dataset supplements spur samples across diverse scales and scenarios.
+  3.DeepPCB Dataset (URL: https://github.com/tangsanli5201/DeepPCB): Comprising 1,500 images with a resolution of 640×640, this dataset covers 6 common types of PCB defects (including spur). As an authoritative industrial-grade PCB defect dataset, it further enriches the dataset with real-world industrial samples of spur defects.
+  
+II. Dataset Preprocessing Pipeline
+To align with the core objective of this study—PCB spur micro-defect detection—eliminate data interference, prevent data leakage, and ensure sample validity, the following standardized preprocessing steps were performed on the raw data:
+  1.Sample Filtering and Label Purification: After integrating the three aforementioned data sources, only images containing spur defects were extracted. Meanwhile, all defect labels other than spur were completely removed from all samples. This ensures the dataset focuses exclusively on the single defect type of spur, avoiding cross-category interference during model training.
+  2.Label Format Unification: The class ID in the first column of all retained spur defect labels was uniformly set to 0. This standardizes the label format to meet the training input requirements of YOLO-series models, thus ensuring the smooth execution of the training pipeline.
+  3.Deduplication (to Prevent Data Leakage): Considering the potential for duplicate images across different data sources, a custom script was developed to conduct line-by-line comparisons of label files to eliminate data leakage that could compromise the evaluation of model generalization ability. If identical label files were detected (presumed to correspond to the same image), the duplicate samples were automatically removed, ensuring the uniqueness of all samples in the final dataset.
+  4.Micro-Defect Filtering: To specifically target the detection of PCB spur micro-defects, a size threshold filter was applied. Samples with spur defects exceeding 48 pixels in size were excluded, and only images containing small-sized spur defects were retained. This ensures the dataset is highly relevant to the research topic and enhances the model's capability to detect tiny spur defects.
+  
+In summary, the dataset constructed in this study not only guarantees sample reliability and representativeness by leveraging publicly available and authoritative sources, but also eliminates interference factors and mitigates data leakage risks through multiple targeted preprocessing steps. It can effectively support the performance validation of the CD-Mosaic data augmentation method for the task of PCB spur micro-defect detection.
